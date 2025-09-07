@@ -87,7 +87,7 @@ export default function Auth() {
               <TabsContent value="signin">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email" className="text-muted-foreground">Email</Label>
                     <Input
                       id="email"
                       type="email"
@@ -98,7 +98,7 @@ export default function Auth() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password" className="text-muted-foreground">Password</Label>
                     <Input
                       id="password"
                       type="password"
@@ -122,7 +122,7 @@ export default function Auth() {
               <TabsContent value="signup">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="display-name">Display Name</Label>
+                    <Label htmlFor="display-name" className="text-muted-foreground">Display Name</Label>
                     <Input
                       id="display-name"
                       type="text"
@@ -132,7 +132,7 @@ export default function Auth() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
+                    <Label htmlFor="signup-email" className="text-muted-foreground">Email</Label>
                     <Input
                       id="signup-email"
                       type="email"
@@ -143,7 +143,7 @@ export default function Auth() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password">Password</Label>
+                    <Label htmlFor="signup-password" className="text-muted-foreground">Password</Label>
                     <Input
                       id="signup-password"
                       type="password"

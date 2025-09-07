@@ -40,13 +40,13 @@
     --ring: 210 45% 15%;
 
     /* Luxury gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(210 45% 15%), hsl(210 35% 25%));
+    --gradient-primary: linear-gradient(135deg, hsl(210 45% 15%), hsl(0, 0%, 3%));
     --gradient-gold: linear-gradient(135deg, hsl(45 85% 55%), hsl(35 75% 50%));
     --gradient-subtle: linear-gradient(180deg, hsl(210 20% 98%), hsl(210 15% 96%));
 
     /* Elegant shadows */
     --shadow-luxury: 0 20px 60px -10px hsl(210 45% 15% / 0.15);
-    --shadow-card: 0 8px 32px -4px hsl(210 45% 15% / 0.12);
+    --shadow-card: 0 8px 32px -4px hsl(0, 0%, 100%);
     --shadow-gold: 0 8px 32px -4px hsl(45 85% 55% / 0.25);
 
     /* Smooth transitions */
@@ -146,5 +146,12 @@
 
   .transition-fast {
     transition: var(--transition-fast);
+  }
+  input {
+    @apply text-foreground; /* Makes typed text use --foreground */
+  }
+
+  input::placeholder {
+    color: hsl(var(--muted-foreground)); /* Lighter placeholder text */
   }
 }

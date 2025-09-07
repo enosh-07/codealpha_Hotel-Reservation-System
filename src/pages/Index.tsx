@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Hotel, Room, RoomCategory } from '@/types/hotel';
 import { HotelService } from '@/services/HotelService';
 import { HotelCard } from '@/components/HotelCard';
@@ -8,8 +9,9 @@ import { BookingManagement } from '@/components/BookingManagement';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Hotel as HotelIcon, Calendar, Star, MapPin, Users } from 'lucide-react';
+import { Hotel as HotelIcon, Calendar, Star, MapPin, Users, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 import hotelHeroImg from '@/assets/hotel-hero.jpg';
 
 const Index = () => {
@@ -22,14 +24,27 @@ const Index = () => {
 
   const hotelService = HotelService.getInstance();
   const { toast } = useToast();
+  const { user, signOut, loading } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+      return;
+    }
+    
     const allHotels = hotelService.getHotels();
     setHotels(allHotels);
     if (allHotels.length > 0) {
       setSelectedHotel(allHotels[0]);
     }
-  }, []);
+  }, [user, loading, navigate]);
 
   const handleHotelSelect = (hotel: Hotel) => {
     setSelectedHotel(hotel);
@@ -58,6 +73,21 @@ const Index = () => {
   };
 
   const categories: (RoomCategory | 'All')[] = ['All', 'Standard', 'Deluxe', 'Suite'];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
@@ -91,6 +121,24 @@ const Index = () => {
                 <span>World-Class Service</span>
               </div>
             </div>
+          </div>
+        </div>
+        
+        {/* User Menu */}
+        <div className="absolute top-4 right-4">
+          <div className="flex items-center space-x-4 bg-black/20 backdrop-blur rounded-lg p-3">
+            <div className="flex items-center space-x-2 text-white">
+              <User className="w-4 h-4" />
+              <span className="text-sm">{user?.email}</span>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={signOut}
+              className="text-white border-white/20 hover:bg-white/10"
+            >
+              Sign Out
+            </Button>
           </div>
         </div>
       </div>
